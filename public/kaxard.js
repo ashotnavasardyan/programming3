@@ -1,40 +1,39 @@
-class Kaxard {
+class Kaxard extends LivingCreature{
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
+        super(x,y);
         this.energy = 30;
         this.directions = [];
-        var xot = new Grass(this.x,this.y);
+        var xot = new Grass(this.x, this.y);
         xoter.push(xot);
         xot.toxic = true;
     }
 
     stanalnorkordinatner() {
         return this.directions = [
-          [this.x - 1, this.y - 1],
-          [this.x, this.y - 1],
-          [this.x + 1, this.y - 1],
-          [this.x - 1, this.y],
-          [this.x + 1, this.y],
-          [this.x - 1, this.y + 1],
-          [this.x, this.y + 1],
-          [this.x + 1, this.y + 1],
-          [this.x-2, this.y-2],
-          [this.x-1, this.y-2],
-          [this.x, this.y-2],
-          [this.x+1, this.y-2],
-          [this.x+2, this.y-2],
-          [this.x-2, this.y-1],
-          [this.x+2, this.y-1],
-          [this.x-2, this.y],
-          [this.x+2, this.y],
-          [this.x-2, this.y+1],
-          [this.x+2, this.y+1],
-          [this.x-2, this.y+2],
-          [this.x-1, this.y+2],
-          [this.x, this.y+2],
-          [this.x+1, this.y+2],
-          [this.x+2, this.y+2],
+            [this.x - 1, this.y - 1],
+            [this.x, this.y - 1],
+            [this.x + 1, this.y - 1],
+            [this.x - 1, this.y],
+            [this.x + 1, this.y],
+            [this.x - 1, this.y + 1],
+            [this.x, this.y + 1],
+            [this.x + 1, this.y + 1],
+            [this.x - 2, this.y - 2],
+            [this.x - 1, this.y - 2],
+            [this.x, this.y - 2],
+            [this.x + 1, this.y - 2],
+            [this.x + 2, this.y - 2],
+            [this.x - 2, this.y - 1],
+            [this.x + 2, this.y - 1],
+            [this.x - 2, this.y],
+            [this.x + 2, this.y],
+            [this.x - 2, this.y + 1],
+            [this.x + 2, this.y + 1],
+            [this.x - 2, this.y + 2],
+            [this.x - 1, this.y + 2],
+            [this.x, this.y + 2],
+            [this.x + 1, this.y + 2],
+            [this.x + 2, this.y + 2],
         ];
     }
 
@@ -44,7 +43,7 @@ class Kaxard {
         for (var i in this.directions) {
             var x = this.directions[i][0];
             var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length && matrix[y][x] !==5) {
+            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length && matrix[y][x] !== 5) {
                 if (matrix[y][x] == n) {
                     empty.push(this.directions[i]);
                 }
@@ -65,12 +64,12 @@ class Kaxard {
             this.energy--;
         }
         else {
-            for(p in xoter){
-              if(xoter[p].y == this.y && xoter[p].x == this.x){
-                  xoter[p].toxic = true;
-                matrix[this.y][this.x] = 5;
-                  break;
-              }
+            for (p in xoter) {
+                if (xoter[p].y == this.y && xoter[p].x == this.x) {
+                    xoter[p].toxic = true;
+                    matrix[this.y][this.x] = 5;
+                    break;
+                }
             }
             this.x = norvandak[0];
             this.y = norvandak[1];

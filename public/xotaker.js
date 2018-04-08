@@ -1,7 +1,6 @@
-class Xotaker {
+class Xotaker extends LivingCreature{
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
+        super(x,y);
         this.eat = 0;
         this.energy = 8;
         this.directions = [];
@@ -21,21 +20,7 @@ class Xotaker {
         ];
     }
 
-    yntrelvandak(n) {
-        this.directions = this.stanalnorkordinatner();
-        var empty = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == n) {
-                    empty.push(this.directions[i]);
-                }
-            }
-        }
-        var norvandak = random(empty);
-        return norvandak;
-    }
+    
     sharjvel() {
 
 
