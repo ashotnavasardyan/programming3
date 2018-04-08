@@ -17,6 +17,7 @@ class Grass extends LivingCreature{
             }
         }
     }
+    //
     bazmanal() {
         this.multiply++;
         var norVandak = this.yntrelvandak(0);
