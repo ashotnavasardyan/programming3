@@ -1,4 +1,4 @@
-class LivingCreature {
+module.exports = class LivingCreature {
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -38,9 +38,9 @@ class LivingCreature {
                 }
             }
         }
-        var norvandak = random(empty);
+        var norvandak = empty[Math.round(Math.random()*(empty.length-1))];
         return norvandak;
     }
 
 
-}
+};

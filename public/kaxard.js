@@ -1,4 +1,4 @@
-class Kaxard extends LivingCreature{
+module.exports = class Kaxard extends LivingCreature{
     constructor(x, y) {
         super(x,y);
         this.energy = 30;
@@ -49,7 +49,7 @@ class Kaxard extends LivingCreature{
                 }
             }
         }
-        var norvandak = random(empty);
+        var norvandak = empty[Math.round(Math.random()*(empty.length-1))];
         return norvandak;
     }
     sharjvel() {
@@ -92,4 +92,4 @@ class Kaxard extends LivingCreature{
         }
         matrix[this.y][this.x] = 1;
     }
-}
+};

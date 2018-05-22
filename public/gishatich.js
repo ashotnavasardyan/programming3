@@ -1,9 +1,12 @@
-class Gishatich extends LivingCreature{
-    constructor(x, y) {
+module.exports = class Gishatich extends LivingCreature{
+    constructor(x, y,ser,temp) {
         super(x,y);
+        this.temp = temp;
+        this.ser = (Math.round(ser)==ser)?"arakan":"igakan";
         this.eat = 0;
         this.energy = 30;
-
+        this.multiply = 10;
+        this.bazm = false;
     }
 
     stanalnorkordinatner() {
@@ -55,6 +58,22 @@ class Gishatich extends LivingCreature{
             this.y = norvandak[1];
             matrix[norvandak[1]][norvandak[0]] = 3;
             this.stanalnorkordinatner();
+            if(this.ser = "igakan"){
+                var arakan = this.yntrelvandak(2);
+                if(arakan){
+                    if(this.multiply >= 8){
+                        this.bazmanal();
+                        if(exanak == "ashun"){
+                            this.bazmanal();
+                        }
+                        this.bazm = false;
+                        this.multiply = 0;
+                    }
+
+                    this.bazm = true;
+                }
+
+            }
             if (this.energy == 0) {
                 this.die();
             }
@@ -65,13 +84,22 @@ class Gishatich extends LivingCreature{
     }
 
     utel() {
-        var nor = this.yntrelvandak(2);
+        var nor = [];
+        var nor1 = this.yntrelvandak(2);
+        if(nor1){
+            nor[0] = nor1;
+        }
+        var nor2 = this.yntrelvandak(2.5);
+        if(nor2){
+            nor[1] = nor2;
+        }
+        var nor = nor[Math.round(Math.random())];
         if (!nor) {
             this.sharjvel();
         }
         else {
             matrix[this.y][this.x] = 0;
-            matrix[nor[1]][nor[0]] = 3;
+            matrix[nor[1]][nor[0]] = 3+(this.ser=="igakan"?0.5:0);
             for (var i in xotakerner) {
 
                 if (xotakerner[i].x == nor[0] && xotakerner[i].y == nor[1]) {
@@ -79,6 +107,19 @@ class Gishatich extends LivingCreature{
                     this.x = nor[0];
                     this.y = nor[1];
                     this.stanalnorkordinatner();
+                    var arakan = this.yntrelvandak(2);
+                    if(arakan){
+                        if(this.multiply >= 8){
+                            this.bazmanal();
+                            if(exanak == "ashun"){
+                                this.bazmanal();
+                            }
+                            this.bazm = false;
+                            this.multiply = 0;
+                        }
+
+                        this.bazm = true;
+                    }
                     xotakerner.splice(i, 1);
 
 
@@ -104,8 +145,10 @@ class Gishatich extends LivingCreature{
     bazmanal() {
         var norvandak = this.yntrelvandak(0);
         if (norvandak) {
-            matrix[norvandak[1]][norvandak[0]] = 3;
-            var gishatich = new Gishatich(norvandak[0], norvandak[1]);
+            var ser = Math.round(Math.random())/2;
+            matrix[norvandak[1]][norvandak[0]] = 3+ser;
+            var temp = Math.round(Math.random()*100);
+            var gishatich = new Gishatich(norvandak[0], norvandak[1],ser,temp);
             gishatichner.push(gishatich);
         }
     }
@@ -128,4 +171,9 @@ class Gishatich extends LivingCreature{
 
 
     }
-}
+    taqacum(){
+        if(this.temp < temprature){
+            this.die();
+        }
+    }
+};

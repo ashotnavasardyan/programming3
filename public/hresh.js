@@ -1,10 +1,13 @@
-class Hresh {
-    constructor(x, y) {
+module.exports = class Hresh {
+    constructor(x, y,ser,temp) {
         this.x = x;
         this.y = y;
+        this.temp = temp;
+        this.ser = (Math.round(ser)==ser)?"arakan":"igakan";
         this.eat = 0;
         this.energy =30;
-
+        this.multiply = 10;
+        this.bazm = false;
     }
 
     stanalnorkordinatner() {
@@ -47,7 +50,7 @@ yntrelvandak(n) {
             }
         }
     }
-    var norvandak = random(empty);
+    var norvandak = empty[Math.round(Math.random()*(empty.length-1))];
     return norvandak;
 }
 sharjvel() {
@@ -68,8 +71,21 @@ sharjvel() {
 
         this.x = norvandak[0];
         this.y = norvandak[1];
-        matrix[norvandak[1]][norvandak[0]] = 6;
+        matrix[norvandak[1]][norvandak[0]] = 6+(this.ser=="igakan"?0.5:0);
         this.stanalnorkordinatner();
+        var arakan = this.yntrelvandak(2);
+        if(arakan){
+            if(this.multiply >= 8){
+                this.bazmanal();
+                if(exanak == "ashun"){
+                    this.bazmanal();
+                }
+                this.bazm = false;
+                this.multiply = 0;
+            }
+
+            this.bazm = true;
+        }
         if (this.energy == 0) {
             this.die();
         }
@@ -80,13 +96,34 @@ sharjvel() {
 }
 
 utel() {
-    var nor = this.yntrelvandak(3);
+    var nor = [];
+    var nor1 = this.yntrelvandak(3);
+    if(nor1){
+        nor[0] = nor1;
+    }
+    var nor2 = this.yntrelvandak(3.5);
+    if(nor2){
+        nor[1] = nor2;
+    }
+    var nor = nor[Math.round(Math.random())];
     if (!nor) {
         this.sharjvel();
     }
     else {
       matrix[this.y][this.x] = 0;
       matrix[nor[1]][nor[0]] = 6;
+        if(arakan){
+            if(this.multiply >= 8){
+                this.bazmanal();
+                if(exanak == "ashun"){
+                    this.bazmanal();
+                }
+                this.bazm = false;
+                this.multiply = 0;
+            }
+
+            this.bazm = true;
+        }
         for (var i in gishatichner) {
 
             if (gishatichner[i].x == nor[0] && gishatichner[i].y == nor[1]) {
@@ -94,6 +131,19 @@ utel() {
                   this.x = nor[0];
                   this.y = nor[1];
                   this.stanalnorkordinatner();
+                var arakan = this.yntrelvandak(2);
+                if(arakan){
+                    if(this.multiply >= 8){
+                        this.bazmanal();
+                        if(exanak == "ashun"){
+                            this.bazmanal();
+                        }
+                        this.bazm = false;
+                        this.multiply = 0;
+                    }
+
+                    this.bazm = true;
+                }
                   gishatichner.splice(i, 1);
 
 
@@ -119,8 +169,11 @@ utel() {
 bazmanal() {
     var norvandak = this.yntrelvandak(0);
     if (norvandak) {
-        matrix[norvandak[1]][norvandak[0]] = 6;
-        var hresh = new Hresh(norvandak[0], norvandak[1]);
+
+        var ser = Math.round(Math.random())/2;
+        matrix[norvandak[1]][norvandak[0]] = 6+ser;
+        var temp = Math.round(Math.random()*100);
+        var hresh = new Hresh(norvandak[0], norvandak[1],ser,temp);
         hreshner.push(hresh);
     }
 }
@@ -142,4 +195,9 @@ die() {
     }
 
 }
-}
+taqacum(){
+        if(this.temp < temprature){
+            this.die();
+        }
+    }
+};

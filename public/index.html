@@ -3,27 +3,231 @@
 
 <head>
 	<title>Lesson 1</title>
+	<meta charset="utf8">
+	<script src="/socket.io/socket.io.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/p5.js"></script>
-	<script type="text/javascript" src="LivingCreature.js"></script>
-	<script type="text/javascript" src="grass.js"></script>
-	<script type="text/javascript" src="xotaker.js"></script>
-	<script type="text/javascript" src="gishatich.js"></script>
-	<script type="text/javascript" src="kaxard.js"></script>
-	<script type="text/javascript" src="hresh.js"></script>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 	<script type="text/javascript" src="script.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+
+
 
 </head>
+<p style="color:rgb(0, 204, 0);">Խոտերի ստատիստիկա</p>
+<canvas id="xot" width="400" height="400"></canvas>
+<p style="color:rgb(255, 128, 0);">Խոտակերների ստատիստիկա</p>
+<canvas id="xotaker" width="400" height="400"></canvas>
+<p style="color:rgb(64, 64, 64);">Գիշատիչների ստատիստիկա</p>
+<canvas id="gishatich" width="400" height="400"></canvas>
+<p style="color:rgb(0, 89, 179);">Կախարդների ստատիստիկա</p>
+<canvas id="kaxard" width="400" height="400"></canvas>
+<p style="color:rgb(15, 15, 138);">Հրեշների ստատիստիկա</p>
+<canvas id="hresh" width="400" height="400"></canvas>
+<script>
+
+    socket.on('graphic',function(data){
+        var x_xot = [];
+        for(i=0;i<Object.keys(data.xoter_stat).length	;i++){
+            x_xot.push((Object.keys(data.xoter_stat[i]).map(function(k) { return data.xoter_stat[i][k] }))[0]);
+		}
+
+		var y_xot = Object.keys(data.xoter_stat);
+
+    var ctx = document.getElementById("xot").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: y_xot,
+            datasets: [{
+                label: '# of Votes',
+                data: x_xot,
+                backgroundColor: [
+                    'rgba(204, 255, 204, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(0, 204, 0)'
+                ],
+                borderWidth: 5
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+
+        var x_xotaker = [];
+        for(i=0;i<Object.keys(data.xotaker_stat).length	;i++){
+            x_xotaker.push((Object.keys(data.xotaker_stat[i]).map(function(k) { return data.xotaker_stat[i][k] }))[0]);
+        }
+
+        var y_xotaker = Object.keys(data.xotaker_stat);
+
+        var ctx = document.getElementById("xotaker").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: y_xotaker,
+                datasets: [{
+                    label: '# of Votes',
+                    data: x_xotaker,
+                    backgroundColor: [
+                        'rgba(255, 179, 102,0.2)'
+
+                    ],
+                    borderColor: [
+                        'rgba(255, 128, 0)'
+                    ],
+                    borderWidth: 5
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+
+        var x_gishatich = [];
+        for(i=0;i<Object.keys(data.gishatich_stat).length	;i++){
+            x_gishatich.push((Object.keys(data.gishatich_stat[i]).map(function(k) { return data.gishatich_stat[i][k] }))[0]);
+        }
+
+        var y_gishatich = Object.keys(data.gishatich_stat);
+
+        var ctx = document.getElementById("gishatich").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: y_gishatich,
+                datasets: [{
+                    label: '# of Votes',
+                    data: x_gishatich,
+                    backgroundColor: [
+                        'rgba(102, 102, 102,0.2)'
+
+                    ],
+                    borderColor: [
+                        'rgba(64, 64, 64)'
+                    ],
+                    borderWidth: 5
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+        var x_kaxard = [];
+        for(i=0;i<Object.keys(data.kaxard_stat).length	;i++){
+            x_kaxard.push((Object.keys(data.kaxard_stat[i]).map(function(k) { return data.kaxard_stat[i][k] }))[0]);
+        }
+
+        var y_kaxard = Object.keys(data.kaxard_stat);
+
+        var ctx = document.getElementById("kaxard").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: y_kaxard,
+                datasets: [{
+                    label: '# of Votes',
+                    data: x_kaxard,
+                    backgroundColor: [
+                        'rgba(51, 153, 255,0.2)'
+
+                    ],
+                    borderColor: [
+                        'rgba(0, 89, 179)'
+                    ],
+                    borderWidth: 5
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+
+        var x_hresh = [];
+        for(i=0;i<Object.keys(data.hresh_stat).length	;i++){
+            x_hresh.push((Object.keys(data.hresh_stat[i]).map(function(k) { return data.hresh_stat[i][k] }))[0]);
+        }
+
+        var y_hresh = Object.keys(data.hresh_stat);
+
+        var ctx = document.getElementById("hresh").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: y_hresh,
+                datasets: [{
+                    label: '# of Votes',
+                    data: x_hresh,
+                    backgroundColor: [
+                        'rgba(77, 77, 255,0.2)'
+
+                    ],
+                    borderColor: [
+                        'rgba(15, 15, 138)'
+                    ],
+                    borderWidth: 5
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+    });
+</script>
 
 <body>
 	<style type="text/css">
+		#xot,#xotaker,#gishatich,#kaxard,#hresh{
+			height: 900px !important;
+		}
 		p {
 			font-size: 84px;
-			margin: 0;
-			color: #699dff;
-			font-family: Arial;
+			margin: 15px;
+		}
+		h1	{
+			text-align: center;
+			font-size: 75px;
+			font-family: SANS-SERIF;
+		}
+		#defaultCanvas0{
+			margin-left:230px;
 		}
 	</style>
-
+	<h1 id="exanak"></h1>
+	<h1 id="status"></h1>
+    <h1 id="temp"></h1>
 </body>
 
 </html>
