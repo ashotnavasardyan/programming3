@@ -1,11 +1,12 @@
 module.exports = class Hresh {
-    constructor(x, y,ser,temp) {
+    constructor(x, y,ser,temp,stab = false) {
+        this.stab = stab;
         this.x = x;
         this.y = y;
         this.temp = temp;
         this.ser = (Math.round(ser)==ser)?"arakan":"igakan";
         this.eat = 0;
-        this.energy =30;
+        this.energy =10;
         this.multiply = 10;
         this.bazm = false;
     }
@@ -67,7 +68,13 @@ sharjvel() {
         this.energy--;
     }
     else {
-        matrix[this.y][this.x] = 0;
+        if(this.stab){
+            matrix[this.y][this.x] = 8;
+            this.stab = false;
+        }
+        else{
+            matrix[this.y][this.x] = 0
+        }
 
         this.x = norvandak[0];
         this.y = norvandak[1];
@@ -110,7 +117,13 @@ utel() {
         this.sharjvel();
     }
     else {
-      matrix[this.y][this.x] = 0;
+        if(this.stab){
+            matrix[this.y][this.x] = 8;
+            this.stab = false;
+        }
+        else{
+            matrix[this.y][this.x] = 0
+        }
       matrix[nor[1]][nor[0]] = 6;
         if(arakan){
             if(this.multiply >= 8){
@@ -126,7 +139,7 @@ utel() {
         }
         for (var i in gishatichner) {
 
-            if (gishatichner[i].x == nor[0] && gishatichner[i].y == nor[1]) {
+            if (gishatichner[i].x == nor[0] && gishatichner[i].y == nor[1] && !gishatichner[i].stab) {
 
                   this.x = nor[0];
                   this.y = nor[1];
@@ -182,7 +195,12 @@ bazmanal() {
 
 
 die() {
-    matrix[this.y][this.x] = 0;
+    if(this.stab){
+        matrix[this.y][this.x] = 8;
+    }
+    else{
+        matrix[this.y][this.x] = 0
+    }
     for (var i in hreshner) {
 
         if (hreshner[i].x == this.x && hreshner[i].y == this.y) {

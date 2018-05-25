@@ -1,7 +1,8 @@
 module.exports = class Gishatich extends LivingCreature{
-    constructor(x, y,ser,temp) {
+    constructor(x, y,ser,temp,stab=false) {
         super(x,y);
         this.temp = temp;
+        this.stab = stab;
         this.ser = (Math.round(ser)==ser)?"arakan":"igakan";
         this.eat = 0;
         this.energy = 30;
@@ -46,13 +47,16 @@ module.exports = class Gishatich extends LivingCreature{
             this.die();
         }
         if (!norvandak) {
-            if (this.energy <= 0) {
-                this.die();
-            }
             this.energy--;
         }
         else {
-            matrix[this.y][this.x] = 0;
+            if(this.stab){
+                matrix[this.y][this.x] = 8;
+                this.stab = false;
+            }
+            else{
+                matrix[this.y][this.x] = 0
+            }
 
             this.x = norvandak[0];
             this.y = norvandak[1];
@@ -98,12 +102,19 @@ module.exports = class Gishatich extends LivingCreature{
             this.sharjvel();
         }
         else {
-            matrix[this.y][this.x] = 0;
-            matrix[nor[1]][nor[0]] = 3+(this.ser=="igakan"?0.5:0);
+
+
             for (var i in xotakerner) {
 
-                if (xotakerner[i].x == nor[0] && xotakerner[i].y == nor[1]) {
-
+                if (xotakerner[i].x == nor[0] && xotakerner[i].y == nor[1] && !xotakerner[i].stab) {
+                    if(this.stab){
+                        matrix[this.y][this.x] = 8;
+                        this.stab = false;
+                    }
+                    else{
+                        matrix[this.y][this.x] = 0
+                    }
+                    matrix[nor[1]][nor[0]] = 3+(this.ser=="igakan"?0.5:0);
                     this.x = nor[0];
                     this.y = nor[1];
                     this.stanalnorkordinatner();
@@ -157,7 +168,13 @@ module.exports = class Gishatich extends LivingCreature{
 
 
     die() {
-        matrix[this.y][this.x] = 0;
+        if(this.stab){
+            matrix[this.y][this.x] = 8;
+            this.stab = false;
+        }
+        else{
+            matrix[this.y][this.x] = 0
+        }
         for (var i in gishatichner) {
 
             if (gishatichner[i].x == this.x && gishatichner[i].y == this.y) {

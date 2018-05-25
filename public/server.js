@@ -9,6 +9,7 @@ global.Grass = require("./grass");
 global.Hresh = require("./hresh");
 global.Kaxard = require("./kaxard");
 global.Xotaker = require("./xotaker");
+global.Stabilizer = require("./stabilizer");
 global.xoter = [];
 global.xotakerner = [];
 global.gishatichner = [];
@@ -16,6 +17,7 @@ global.temprature = 50;
 global.kaxardner = [];
 global.hreshner = [];
 global.exanak = 0;
+global.stabilizer = 0;
 // var xoter_stat = [];
 // var xotaker_stat = [];
 // var gishatich_stat = [];
@@ -31,131 +33,167 @@ app.get("/", function (req, res) {
 io.on('connection', function () {
     main();
 });
-io.on('continue',main);
- function main(){
-     var size = [30, 30];
-         matrix = [];
-         for (i = 0; i < size[1]; i++) {
-             matrix[i] = [];
-             for (z = 0; z < size[0]; z++) {
-                 var num = Math.round(Math.random());
-                 matrix[i][z] = num;
-             }
-         }
-     var rand = Math.round(Math.random() * size[0] * size[1] / 4);
+io.on('continue', main);
 
-     for (p = 0; p <= rand; p++) {
-         var randx = Math.round(Math.random() * size[0]);
-         var randy = Math.round(Math.random() * size[1]);
-         if (randx >= size[0]) {
-             randx--;
-         }
-         if (randy >= size[1]) {
-             randy--;
-         }
-         var ser = Math.round(Math.random())/2;
-         matrix[randx][randy] = 2+ser;
-     }
+function main() {
+    var size = [20, 20];
+    matrix = [];
+    for (i = 0; i < size[1]; i++) {
+        matrix[i] = [];
+        for (z = 0; z < size[0]; z++) {
+            var num = Math.round(Math.random());
+            matrix[i][z] = num;
+        }
+    }
+    var rand = Math.round(Math.random() * size[0] * size[1] / 4);
 
-     var rand = Math.round(Math.random() * size[0] * size[1] / 20);
+    for (p = 0; p <= rand; p++) {
+        var randx = Math.round(Math.random() * size[0]);
+        var randy = Math.round(Math.random() * size[1]);
+        if (randx >= size[0]) {
+            randx--;
+        }
+        if (randy >= size[1]) {
+            randy--;
+        }
+        var ser = Math.round(Math.random())/2;
+        matrix[randx][randy] = 2+ser;
+    }
 
-     for (p = 0; p <= rand; p++) {
-         var randx = Math.round(Math.random() * size[0]);
-         var randy = Math.round(Math.random() * size[1]);
-         if (randx >= size[0]) {
-             randx--;
-         }
-         if (randy >= size[1]) {
-             randy--;
-         }
-         var ser = Math.round(Math.random())/2;
-         matrix[randx][randy] = 3+ser;
-     }
+    var rand = Math.round(Math.random() * size[0] * size[1] / 20);
 
-     var rand = Math.round(Math.random() * size[0] * size[1] / 40);
-     //
-     for (p = 0; p <= rand; p++) {
-         var randx = Math.round(Math.random() * size[0]);
-         var randy = Math.round(Math.random() * size[1]);
-         if (randx >= size[0]) {
-             randx--;
-         }
-         if (randy >= size[1]) {
-             randy--;
-         }
+    for (p = 0; p <= rand; p++) {
+        var randx = Math.round(Math.random() * size[0]);
+        var randy = Math.round(Math.random() * size[1]);
+        if (randx >= size[0]) {
+            randx--;
+        }
+        if (randy >= size[1]) {
+            randy--;
+        }
+        var ser = Math.round(Math.random()) / 2;
+        matrix[randx][randy] = 3 + ser;
+    }
 
-         matrix[randx][randy] = 4;
-     }
+    var rand = Math.round(Math.random() * size[0] * size[1] / 40);
 
-     var rand = Math.round(Math.random() * size[0] * size[1] / 40);
+    for (p = 0; p <= rand; p++) {
+        var randx = Math.round(Math.random() * size[0]);
+        var randy = Math.round(Math.random() * size[1]);
+        if (randx >= size[0]) {
+            randx--;
+        }
+        if (randy >= size[1]) {
+            randy--;
+        }
 
-     for (p = 0; p <= rand; p++) {
-         var randx = Math.round(Math.random() * size[0]);
-         var randy = Math.round(Math.random() * size[1]);
-         if (randx >= size[0]) {
-             randx--;
-         }
-         if (randy >= size[1]) {
-             randy--;
-         }
-         var ser = Math.round(Math.random())/2;
-         matrix[randx][randy] = 6+ser;
-     }
-     xoter = [];
-     xotakerner = [];
-     gishatichner = [];
-     kaxardner = [];
-     hreshner = [];
-     for (var y = 0; y < matrix.length; y++) {
-         for (var x = 0; x < matrix[y].length; x++) {
-             if (matrix[y][x] == 1) {
-                 var temp = Math.round(Math.random()*100);
-                 var xot = new Grass(x, y,temp);
-                 xoter.push(xot);
-             }
-             if (matrix[y][x] == 2 || matrix[y][x] == 2.5) {
-                 var temp = Math.round(Math.random()*100);
-                 var xotaker = new Xotaker(x, y, matrix[y][x],temp);
-                 xotakerner.push(xotaker);
-             }
-             if (matrix[y][x] == 3 || matrix[y][x] == 3.5) {
-                 var temp = Math.round(Math.random()*100);
-                 var gishatich = new Gishatich(x, y, matrix[y][x],temp);
-                 gishatichner.push(gishatich);
-             }
-             if (matrix[y][x] == 4) {
-                 var kaxard = new Kaxard(x, y, matrix[y][x],temp);
-                 kaxardner.push(kaxard);
-             }
-             if (matrix[y][x] == 6 || matrix[y][x] == 6.5) {
-                 var temp = Math.round(Math.random()*100);
-                 var hresh = new Hresh(x, y, matrix[y][x],temp);
-                 hreshner.push(hresh);
-             }
-         }
-     }
+        matrix[randx][randy] = 4;
+    }
 
-     // console.log(hreshner);
-     // console.log(kaxardner);
-     // console.log(xotakerner);
-     // console.log(xoter);
-     // console.log(gishatichner);
-     // console.log(matrix);
-     // var arr = [matrix,hreshner,kaxardner,xotakerner,xoter,gishatichner];
-     // matrix = [ [ 1, 1, 1, 1, 0, 0, 0, 2, 1, 1 ],
-     //     [ 1, 1, 0, 2.5, 1, 2.5, 5, 2.5, 2, 0 ],
-     //     [ 0, 1, 0, 0, 0, 1, 1, 0, 2, 2 ],
-     //     [ 1, 1, , 1, 1, 2, 0, 0, 1, 2.5 ],
-     //     [ 1, 2, 2.5, 1, 0, 0, 0, 1, 0, 1 ],
-     //     [ 1, 0, 1, 1, 0, 0, 1, 5, 0, 0 ],
-     //     [ 1, 1, 0, 0, 1, 2.5, 2, 1, 0, 0 ],
-     //     [ 1, 1, 0, 5, 1, 0, 1, 2, 1, 0 ],
-     //     [ 0, 0, 1, 0, 0, 1, 0, 1, 0, 1 ],];
+    var rand = Math.round(Math.random() * size[0] * size[1] / 40);
+
+    for (p = 0; p <= rand; p++) {
+        var randx = Math.round(Math.random() * size[0]);
+        var randy = Math.round(Math.random() * size[1]);
+        if (randx >= size[0]) {
+            randx--;
+        }
+        if (randy >= size[1]) {
+            randy--;
+        }
+        var ser = Math.round(Math.random()) / 2;
+        matrix[randx][randy] = 6 + ser;
+    }
 
 
-     graphic();
-     startGame(matrix,size);
- }
+    var x = Math.round(size[0] / 2);
+    var y = Math.round(size[1] / 2);
+    matrix[x][y] = 7;
+    matrix[x - 1][y - 1] = 8;
+    matrix[x][y - 1] = 8;
+    matrix[x + 1][y - 1] = 8;
+    matrix[x - 1][y] = 8;
+    matrix[x + 1][y] = 8;
+    matrix[x - 1][y + 1] = 8;
+    matrix[x][y + 1] = 8;
+    matrix[x + 1][y + 1] = 8;
+    matrix[size[0] - 1][size[1] - 1] = 9;
+    matrix[0][0] = 9;
+    matrix[0][size[1] - 1] = 9;
+    matrix[size[0] - 1][0] = 9;
+    xoter = [];
+    xotakerner = [];
+    gishatichner = [];
+    kaxardner = [];
+    hreshner = [];
+    // matrix = [ [ 1, 1, 1, 1, 0, 0, 0, 2, 1, 1 ],
+    //     [ 1, 1, 0, 2.5, 1, 2.5, 5, 2.5, 2, 0 ],
+    //     [ 0, 1, 0, 0, 0, 1, 1, 0, 2, 2 ],
+    //     [ 1, 1, , 1, 1, 2, 0, 0, 1, 2.5 ],
+    //     [ 1, 2, 2.5, 1, 7, 0, 0, 1, 0, 1 ],
+    //     [ 1, 0, 1, 1, 0, 0, 1, 5, 0, 0 ],
+    //     [ 1, 1, 0, 0, 1, 2.5, 2, 1, 0, 0 ],
+    //     [ 1, 1, 0, 5, 1, 0, 1, 2, 1, 0 ],
+    //     [ 0, 0, 1, 0, 0, 1, 0, 1, 0, 1 ],];
+    for (var y = 0; y < matrix.length; y++) {
+        for (var x = 0; x < matrix[y].length; x++) {
+            if (matrix[y][x] == 1) {
+                var temp = Math.round(Math.random() * 100);
+                var xot = new Grass(x, y, temp, true);
+                xoter.push(xot);
+            }
+            if (matrix[y][x] == 9) {
+                var temp = Math.round(Math.random() * 100);
+                var xot = new Grass(x, y, temp, false);
+                xoter.push(xot);
+            }
+            if (matrix[y][x] == 2 || matrix[y][x] == 2.5) {
+                var temp = Math.round(Math.random() * 100);
+                var xotaker = new Xotaker(x, y, matrix[y][x], temp);
+                xotakerner.push(xotaker);
+            }
+            if (matrix[y][x] == 3 || matrix[y][x] == 3.5) {
+                var temp = Math.round(Math.random() * 100);
+                var gishatich = new Gishatich(x, y, matrix[y][x], temp);
+                gishatichner.push(gishatich);
+            }
+            if (matrix[y][x] == 4) {
+                var kaxard = new Kaxard(x, y, matrix[y][x], temp);
+                kaxardner.push(kaxard);
+            }
+            if (matrix[y][x] == 6 || matrix[y][x] == 6.5) {
+                var temp = Math.round(Math.random() * 100);
+                var hresh = new Hresh(x, y, matrix[y][x], temp);
+                hreshner.push(hresh);
+            }
+            if (matrix[y][x] == 7) {
+                stabilizer = new Stabilizer(x, y);
+            }
+        }
+    }
+
+    // console.log(hreshner);
+    // console.log(kaxardner);
+    // console.log(xotakerner);
+    // console.log(xoter);
+    // console.log(gishatichner);
+    // console.log(matrix);
+    // var arr = [matrix,hreshner,kaxardner,xotakerner,xoter,gishatichner];
+    // matrix = [ [ 1, 1, 1, 1, 0, 0, 0, 2, 1, 1 ],
+    //     [ 1, 1, 0, 2.5, 1, 2.5, 5, 2.5, 2, 0 ],
+    //     [ 0, 1, 0, 0, 0, 1, 1, 0, 2, 2 ],
+    //     [ 1, 1, , 1, 1, 2, 0, 0, 1, 2.5 ],
+    //     [ 1, 2, 2.5, 1, 0, 0, 0, 1, 0, 1 ],
+    //     [ 1, 0, 1, 1, 0, 0, 1, 5, 0, 0 ],
+    //     [ 1, 1, 0, 0, 1, 2.5, 2, 1, 0, 0 ],
+    //     [ 1, 1, 0, 5, 1, 0, 1, 2, 1, 0 ],
+    //     [ 0, 0, 1, 0, 0, 1, 0, 1, 0, 1 ],];
+
+
+    graphic();
+    // console.log(matrix);
+    startGame(matrix, size);
+}
 
 function graphic() {
     fs.readFile('xoter_stat.json', 'utf8', function (err, data) {
@@ -164,9 +202,9 @@ function graphic() {
 
         var xoter_length = Object.keys(dat.xoter_stat).length;
         var xotaker_length = Object.keys(dat.xotaker_stat).length;
-        var gishatich_length =  Object.keys(dat.gishatich_stat).length;
-        var kaxard_length =  Object.keys(dat.kaxard_stat).length;
-        var hresh_length =  Object.keys(dat.hresh_stat).length;
+        var gishatich_length = Object.keys(dat.gishatich_stat).length;
+        var kaxard_length = Object.keys(dat.kaxard_stat).length;
+        var hresh_length = Object.keys(dat.hresh_stat).length;
 
         var xoter_name = ++xoter_length;
         var xoter_obj = {};
@@ -193,25 +231,26 @@ function graphic() {
         hresh_obj[hresh_name] = hreshner.length;
         dat.hresh_stat.push(hresh_obj);
 
-        fs.writeFile('xoter_stat.json',JSON.stringify(dat),function (err) {
+        fs.writeFile('xoter_stat.json', JSON.stringify(dat), function (err) {
             if (err) throw err;
-            console.log('Saved!');
+            // console.log('Saved!');
         });
-        console.log(xoter_length + " "+ xotaker_length + " " +gishatich_length);
+        // console.log(xoter_length + " " + xotaker_length + " " + gishatich_length);
 
-        io.emit('graphic',dat);
+        io.emit('graphic', dat);
     });
 }
-function startGame(matrix,size) {
+
+function startGame(matrix, size) {
 
     var time = 0;
 
-    setInterval(gameFunc, 2000);
+    setInterval(gameFunc, 500);
 
     function gameFunc() {
         // console.log(xotakerner);
         if (exanak == "dzmer") {
-            if(time%3 ==0) {
+            if (time % 3 == 0) {
                 for (var n in xotakerner) {
                     xotakerner[n].utel();
                 }
@@ -233,13 +272,15 @@ function startGame(matrix,size) {
                 xoter[i].bazmanal();
                 xoter[i].toxic_func();
             }
-            for(i=0;i<2;i++){
+            for (i = 0; i < 2; i++) {
                 for (var n in xotakerner) {
                     xotakerner[n].utel();
                 }
             }
         }
-        else {
+        else if (exanak == "amar") {
+            // console.log(xoter.length);
+
             for (var i in xoter) {
                 xoter[i].bazmanal();
                 xoter[i].toxic_func();
@@ -250,6 +291,9 @@ function startGame(matrix,size) {
             for (var z in gishatichner) {
                 gishatichner[z].utel();
             }
+        }
+        else {
+
         }
 
         for (var z in gishatichner) {
@@ -282,35 +326,39 @@ function startGame(matrix,size) {
             time = -1;
         }
         if (time >= 30 && time <= 33) {
-                temprature = Math.round(Math.random() * 100);
-                global_taqacum();
+            temprature = Math.round(Math.random() * 100);
+            global_taqacum();
         }
         time++;
         // console.log(time);
         // console.log(exanak);
-        io.emit("matrix", matrix, exanak,size,xoter,temprature);
+        stabilizer.stabil();
+        io.emit("matrix", matrix, exanak, size, xoter, xotakerner, temprature);
     }
-}                                                           
+}
 
 function terevatap() {
-    var rand = Math.round((Math.random() * xoter.length/5) );
+    var rand = Math.round((Math.random() * xoter.length / 5));
     // console.log(xoter.length);
     if (xoter.length > rand) {
         // console.log(xoter.length+" and "+rand);
         for (i = 0; i <= rand; i++) {
-            var xot = Math.round(Math.random() * (xoter.length-1));
-            //console.log(xoter[xot]);
-            var xot_x = xoter[xot].x;
-            var xot_y = xoter[xot].y;
-            // console.log(xot_x+" "+xot_y);
-            matrix[xot_y][xot_x] = 0;
-            // console.log(matrix[xot_y][xot_x]);
-            xoter.splice(xot, 1);
+            var xot_index = Math.round(Math.random() * (xoter.length - 1));
+            var xot = xoter[xot_index];
+            if(xot.die) {
+                var xot_x = xot.x;
+                var xot_y = xot.y;
+                // console.log(xot_x+" "+xot_y);
+                matrix[xot_y][xot_x] = 0;
+                // console.log(matrix[xot_y][xot_x]);
+                xoter.splice(xot_index, 1);
+            }
         }
     }
     // console.log(xoter.length);
     // console.log("this is "rand);
 }
+
 function global_taqacum() {
     for (var n in xoter) {
         xoter[n].taqacum();

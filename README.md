@@ -1,1 +1,1 @@
-# programming3 NEWßßß
+#Programming 3 / final project by Ashot Navasardyan. Game of Life

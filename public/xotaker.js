@@ -1,7 +1,8 @@
 module.exports = class Xotaker{
-    constructor(x, y,ser,temp) {
+    constructor(x, y,ser,temp,stab=false) {
         this.x = x;
         this.y = y;
+        this.stab = stab;
         this.temp = temp;
         this.eat = 0;
         this.energy = 8;
@@ -54,7 +55,13 @@ module.exports = class Xotaker{
             this.energy--;
         }
         else {
-            matrix[this.y][this.x] = 0;
+            if(this.stab){
+                matrix[this.y][this.x] = 8;
+                this.stab = false;
+            }
+            else{
+                matrix[this.y][this.x] = 0;
+            }
             this.x = norvandak[0];
             this.y = norvandak[1];
             matrix[norvandak[1]][norvandak[0]] = 2+((this.ser=="igakan")?0.5:0);
@@ -78,12 +85,6 @@ module.exports = class Xotaker{
             if(this.bazm){
                 this.multiply++;
             }
-            if (this.energy == 0) {
-                this.die();
-            }
-            else {
-                this.energy--;
-            }
         }
     }
 
@@ -106,8 +107,13 @@ module.exports = class Xotaker{
             this.sharjvel();
         }
         else {
-          matrix[this.y][this.x] = 0;
-          matrix[nor[1]][nor[0]] = 2+((this.ser=="igakan")?0.5:0);
+            if(this.stab){
+                matrix[this.y][this.x] = 8;
+                this.stab = false;
+            }
+            else{matrix[this.y][this.x] = 0
+            }
+            matrix[nor[1]][nor[0]] = 2+((this.ser=="igakan")?0.5:0);
             if(this.ser = "igakan"){
                 var arakan = this.yntrelvandak(2);
                 if(arakan){
@@ -189,7 +195,12 @@ module.exports = class Xotaker{
 
 
     die() {
-        matrix[this.y][this.x] = 0;
+        if(this.stab){
+            matrix[this.y][this.x] = 8;
+        }
+        else{
+            matrix[this.y][this.x] = 0
+        }
         for (var i in xotakerner) {
 
             if (xotakerner[i].x == this.x && xotakerner[i].y == this.y) {

@@ -1,7 +1,8 @@
 module.exports = class Grass extends LivingCreature{
-    constructor(x, y,temp) {
+    constructor(x, y,temp,die) {
         super(x,y);
         this.temp = temp;
+        this.die =die;
         this.multiply = 0;
         this.toxic_time = 12;
         this.toxic = false;
@@ -25,7 +26,7 @@ module.exports = class Grass extends LivingCreature{
         var norVandak = this.yntrelvandak(0);
         if (this.multiply >= this.time  && norVandak) {
             var temp = Math.round(Math.random()*100);
-            var norXot = new Grass(norVandak[0], norVandak[1],temp);
+            var norXot = new Grass(norVandak[0], norVandak[1],temp,true);
             xoter.push(norXot);
             //console.log(norVandak);
             matrix[norVandak[1]][norVandak[0]] = 1;
@@ -33,7 +34,7 @@ module.exports = class Grass extends LivingCreature{
         }
     }
     taqacum(){
-        if(this.temp < temprature){
+        if(this.temp < temprature&&this.die){
             matrix[this.y][this.x] = 0;
         for (var i in xoter) {
 

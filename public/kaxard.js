@@ -64,13 +64,20 @@ module.exports = class Kaxard extends LivingCreature{
             this.energy--;
         }
         else {
-            for (p in xoter) {
-                if (xoter[p].y == this.y && xoter[p].x == this.x) {
-                    xoter[p].toxic = true;
-                    matrix[this.y][this.x] = 5;
-                    break;
+            if(this.stab){
+                matrix[this.y][this.x] = 8;
+                this.stab = false;
+            }
+            else{
+                for (p in xoter) {
+                    if (xoter[p].y == this.y && xoter[p].x == this.x) {
+                        xoter[p].toxic = true;
+                        matrix[this.y][this.x] = 5;
+                        break;
+                    }
                 }
             }
+
             this.x = norvandak[0];
             this.y = norvandak[1];
             matrix[norvandak[1]][norvandak[0]] = 4;
@@ -90,6 +97,12 @@ module.exports = class Kaxard extends LivingCreature{
                 kaxardner.splice(i, 1);
             }
         }
-        matrix[this.y][this.x] = 1;
+        if(this.stab){
+            matrix[this.y][this.x] = 8;
+            this.stab = false;
+        }
+        else{
+            matrix[this.y][this.x] = 1;
+        }
     }
 };

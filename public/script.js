@@ -3,9 +3,9 @@
 
 var socket = io.connect('http://localhost:3000');
 
-socket.on('matrix', function (matrix, exanak,size,xoter,temprature) {
+socket.on('matrix', function (matrix, exanak,size,xoter,xotakerner,temprature) {
+    console.log(xoter);
     var temp = temprature;
-    console.log(temprature);    
         $('#temp').html(temp+"°C");
     
 
@@ -33,15 +33,15 @@ socket.on('matrix', function (matrix, exanak,size,xoter,temprature) {
     else {
 
     }
-    if(size[0]*size[1] == xoter.length){
-        $('#status').text('Խաղը հաղթեցին խոտերը');
+    if(xotakerner.length ==0){
+        var xoter_score = $('#status #xoter_score').text();
+        $('#status #xoter_score').text(++xoter_score);
         $('#status').css('color','#009900');
-        // socket.emit('continue','');
     }
-    else if(xoter.length == 0){
-        $('#status').text('Խաղը հաղթեցին խոտակերները');
-        $('#status').css('color','#ffff00');
-        // socket.emit('continue','');
+    else if(xoter.length == 4){
+        var xotakerner_score = $('#status #xotakerner_score').text();
+        $('#status #xotakerner_score').text(++xotakerner_score);
+        $('#status').css('color','#009900');
     }
     else{
 
@@ -50,7 +50,7 @@ socket.on('matrix', function (matrix, exanak,size,xoter,temprature) {
     startdraw(matrix, exanak);
 });
 
-var side = 50;
+var side = 20;
 
 function setup() {
     noStroke(); 
@@ -61,7 +61,6 @@ function setup() {
 function startdraw(mat, e) {
     var exanak = e;
     var matrix = mat;
-    console.log(matrix);
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {
@@ -74,6 +73,7 @@ function startdraw(mat, e) {
                     rect(x * side, y * side, side, side);
                 }
                 else if(exanak == "amar"){
+                    console.log(matrix);
                     fill('MediumSeaGreen'); 
                     rect(x * side, y * side, side, side);
                     fill('red');
@@ -104,6 +104,18 @@ function startdraw(mat, e) {
             }
             else if (matrix[y][x] == 6 || matrix[y][x] == 6.5) {
                 fill('SlateBlue');
+                rect(x * side, y * side, side, side);
+            }
+            else if (matrix[y][x] == 7) {
+                fill('#F2552C');
+                rect(x * side, y * side, side, side);
+            }
+            else if (matrix[y][x] == 8) {
+                fill('#16f200');
+                rect(x * side, y * side, side, side);
+            }
+            else if (matrix[y][x] == 9) {
+                fill('#005b06');
                 rect(x * side, y * side, side, side);
             }
             else {
